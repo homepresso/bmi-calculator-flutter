@@ -4,6 +4,9 @@ import 'constants.dart';
 import 'reusablecard.dart';
 import 'cardchild.dart';
 import 'RoundIconButton.dart';
+import 'results_page.dart';
+import 'bottom_button.dart';
+import 'calc_brain.dart';
 
 enum Gender { male, female }
 
@@ -199,11 +202,23 @@ class _InputPageState extends State<InputPage> {
                 )
               ],
             )),
-            Container(
-                color: kBottomContainerColor,
-                margin: EdgeInsets.only(top: 10.0),
-                width: double.infinity,
-                height: kBottomContainerHeight),
+            BottomButton(
+              buttonTitle: 'CALCULATE',
+              onTap: () {
+                CalcBrain calc = CalcBrain(height: height, weight: weight);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultsPage(
+                      bmiResults: calc.calcBMI(),
+                      resultText: calc.getResults(),
+                      interperation: calc.getInterperation(),
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ));
   }
